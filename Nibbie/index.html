@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pou-like Pixel Game</title>
+  <link rel="stylesheet" href="bacisc.css">
+</head>
+<body>
+  <div id="game">
+    <canvas id="screen" width="650" height="800"></canvas>
+    <div id="hud">
+      <button id="feedBtn">Kŕmiť</button>
+      <button id="playBtn">Hrať</button>
+      <div class="meters">
+        <div class="meter">
+          <div class="label">Hlad</div>
+          <div id="hungerPixel" class="pixel-progress" aria-hidden="false"></div>
+          <progress id="hunger" value="80" max="100" style="display:none"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
