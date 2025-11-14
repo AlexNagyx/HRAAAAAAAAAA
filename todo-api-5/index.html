@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TODO List</title>
+
+    <link rel="stylesheet" href="matcha.css">
+    <script src="storage.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<h1> TODO List </h1>
+
+<section class="not-completed-tasks">
+    <h2> Do this! </h2>
+    <div class="task-list">
+        <div class="task">
+            <p> Test task 1 </p>
+            <div class="buttons">
+                <button class="delete-task danger uncompleted-button"> Delete </button>
+                <button class="complete-task success uncompleted-button"> Complete </button>
+                <button class="restore-task info completed-button"> Restore </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="add-new-task">
+    <h2> Add a new task </h2>
+    <form id="add-task-form">
+        <label style="height: 100%; margin: 0">
+            <span style="display: none"> Your task name: </span>
+            <input type="text" id="new-task-input" placeholder="Enter a new task..." style="height: 100%" required>
+        </label>
+        <button id="add-task-button" class="success" type="submit"> Add Task </button>
+    </form>
+</section>
+
+<section class="completed-tasks">
+    <h2> Good job completing this! </h2>
+    <div class="task-list">
+        <div class="task">
+            <p> Test task 1 </p>
+            <div class="buttons">
+                <button class="delete-task danger not-completed-button"> Delete </button>
+                <button class="complete-task success not-completed-button"> Complete </button>
+                <button class="restore-task info completed-button"> Restore </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="templates" style="display: none;">
+    <div class="task">
+        <p> Task text </p>
+        <div class="buttons">
+            <button class="delete-task danger uncompleted-button" onclick="deleteTask(event)"> Delete </button>
+            <button class="complete-task success uncompleted-button" onclick="completeTask(event)"> Complete </button>
+            <button class="restore-task info completed-button" onclick="restoreTask(event)"> Restore </button>
+        </div>
+    </div>
+</div>
+
+</body>
+<style>
+    .task {
+        border: 2px solid var(--muted);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        align-items: center;
+    }
+
+    .task p {
+        width: 100%;
+        margin: 1px;
+    }
+
+    .task .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        gap: 2px;
+    }
+
+    .completed-tasks .task p {
+        text-decoration: line-through;
+    }
+
+    .completed-tasks .task {
+        opacity: 0.5;
+    }
+
+    .completed-tasks .not-completed-button {
+        display: none;
+    }
+
+    .not-completed-tasks .completed-button {
+        display: none;
+    }
+
+    #add-task-form {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        gap: 10px;
+    }
+
+    #add-task-form label::before {
+        content: none;
+    }
+</style>
+</html>
