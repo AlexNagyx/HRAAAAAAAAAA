@@ -1,0 +1,160 @@
+:root {
+  --bg: #222;
+  --panel: #111;
+  --accent: #0633af;
+}
+html,body{height:100%;margin:0;}
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(#650f0f,var(--bg));
+  color:white;
+  font-family: "PressStart2P", monospace;
+}
+#game{
+  width:650px;
+  margin:0 auto;
+  position:relative;
+  /* keep the container height similar to canvas to help vertical centering */
+  height:800px;
+}
+canvas{
+  width: 650px;
+  height: 800px;
+  display:block;
+  image-rendering: pixelated;
+  background:#76c1ff;
+  border:4px solid #333;
+  justify-self:center;
+}
+#hud{
+  background:var(--panel);
+  padding:12px;
+  border-radius:6px;
+  width: 420px;
+  height: 650px;
+  position:absolute;
+  left: -480px; /* place HUD farther to the left of the centered canvas */
+  top:50%;
+  transform:translateY(-50%);
+  background-image: url(''); /*sem pridam nase pixel posadie pre hud*/
+  background-repeat: repeat;
+  
+  background-size: 220px 220px;
+  image-rendering: pixelated;
+
+
+  background-color: rgba(0,0,0,0.35);
+  background-blend-mode: overlay;
+
+}
+button{display:inline-block;margin:0 6px 8px;padding:8px;border:none;background:var(--accent);color:#000;cursor:pointer;}
+/* controls container: center buttons and keep them side-by-side */
+.controls{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:12px}
+
+/* style HUD buttons to match the meter label (font, size, color) */
+#hud .controls button{
+  background:transparent;
+  border:2px solid var(--accent);
+  color:#051494;
+  font-size:20px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  text-shadow:2px 2px 0 #000;
+  font-weight:700;
+  padding:8px 14px;
+  font-family:inherit;
+}
+
+/* feed picker UI */
+.feed-wrap{display:inline-block}
+
+/* charge button with cooldown indicator */
+.charge-wrap{position:relative;display:inline-block}
+.cooldown{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;font-size:24px;font-weight:900;color:#ff6b6b;letter-spacing:2px;text-align:center;min-width:60px;text-shadow:2px 2px 4px rgba(0,0,0,0.8);background:rgba(0,0,0,0.7);padding:6px 12px;border:2px solid #ff6b6b;border-radius:6px}
+.cooldown.hidden{display:none}
+
+/* Minigame modal */
+.minigame-modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  background: rgba(0,0,0,0.35);
+  padding:20px;
+}
+.minigame-modal.hidden{display:none}
+.minigame-panel{width:320px;max-width:95%;background:rgba(0,0,0,0.95);border:3px solid var(--accent);padding:16px;border-radius:8px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+
+/* When anchored to the HUD we position the panel absolutely inside the overlay and allow JS to place it */
+.minigame-modal.hud .minigame-panel{
+  position:absolute;
+  transform:translate(-50%,-100%);
+  will-change:transform,left,top;
+}
+
+/* Pop-in animation for modal panel */
+@keyframes popIn {
+  0% { transform: translateY(-8px) scale(0.96); opacity: 0; }
+  60% { transform: translateY(6px) scale(1.02); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.minigame-modal:not(.hidden) .minigame-panel{
+  animation: popIn 220ms cubic-bezier(.2,.9,.2,1);
+  transform-origin: center center;
+}
+.minigame-header{font-size:18px;color:var(--accent);font-weight:800;margin-bottom:8px}
+.minigame-panel select{width:100%;padding:8px;margin-bottom:10px;background:transparent;border:2px solid var(--accent);color:#fff}
+.minigame-actions{display:flex;gap:8px;justify-content:center}
+.minigame-actions button{padding:8px 12px;border:2px solid var(--accent);background:transparent;color:#051494;font-weight:700}
+.cooldown.hidden{display:none}
+
+/* item select + use button under HUD */
+.item-use{display:flex;gap:8px;align-items:center;justify-content:flex-start;margin-top:12px}
+.item-use .small-label{font-size:16px;color:#051494;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-right:6px}
+.item-use select{padding:6px 8px;border:2px solid var(--accent);background:transparent;color:#fff;font-family:inherit}
+.item-use button#useBtn{padding:6px 10px;border:2px solid var(--accent);background:transparent;color:#051494;font-weight:700;cursor:pointer}
+
+/* thumbnail for selected item (fries texture) */
+.item-thumb{width:40px;height:40px;object-fit:contain;border:2px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.25);padding:2px;border-radius:4px}
+.item-thumb.hidden{display:none}
+progress{width:100%;}
+
+/* Pixel-style segmented progress bar */
+.meters{margin-top:8px;}
+.meter{margin-bottom:10px;}
+.meter .label{
+  font-size:18px;
+  margin-bottom:6px;
+  color:var(--accent);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.pixel-progress{display:flex;gap:4px;align-items:center}
+.pixel-progress .step{
+  width: 40px;
+  height: 50px;
+  background:#222;
+  border:2px solid #000;
+  box-sizing:border-box;
+}
+.pixel-progress .step.filled{
+  background:var(--accent);
+  box-shadow: inset -2px -2px 0 rgba(0,0,0,0.15);
+}
+
+/* keep native progress small for mood/energy */
+progress{height:12px}
+
+#hud .meter .label{
+  font-size:20px;
+  color:#051494;
+  letter-spacing:2px;
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom:8px;
+  text-transform:uppercase;
+  font-weight:700;
+}
